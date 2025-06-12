@@ -1,0 +1,265 @@
+{
+  "name": "DufsX Configuration",
+  "version": "1.0.0",
+  "description": "Sample configuration file for testing JSON syntax highlighting",
+  "author": {
+    "name": "DufsX Team",
+    "email": "team@dufsx.dev",
+    "website": "https://github.com/sigoden/dufs"
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 5000,
+    "ssl": {
+      "enabled": false,
+      "cert_path": null,
+      "key_path": null
+    },
+    "cors": {
+      
+      "enabled": true,
+      "origins": ["*"],
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+      "headers": ["Content-Type", "Authorization", "X-Requested-With"]
+    }
+  },
+  "features": {
+    "file_upload": true,
+    "file_download": true,
+    "file_delete": true,
+    "directory_browsing": true,
+    "search": true,
+    "archive_download": true,
+    "webdav": false,
+    "markdown_editor": true,
+    "syntax_highlighting": true,
+    "code_folding": true,
+    "auto_formatting": true
+  },
+  "ui": {
+    "theme": "auto",
+    "themes": {
+      "light": {
+        "primary_color": "#3498db",
+        "secondary_color": "#2ecc71",
+        "background_color": "#ffffff",
+        "text_color": "#2c3e50",
+        "border_color": "#e1e4e8"
+      },
+      "dark": {
+        "primary_color": "#5dade2",
+        "secondary_color": "#58d68d",
+        "background_color": "#0d1117",
+        "text_color": "#f0f6fc",
+        "border_color": "#30363d"
+      }
+    },
+    "layout": {
+      "sidebar_width": 300,
+      "show_file_tree": true,
+      "show_breadcrumbs": true,
+      "show_file_size": true,
+      "show_modification_time": true
+    },
+    "editor": {
+      "font_family": "Fira Code, Consolas, Monaco, monospace",
+      "font_size": 14,
+      "line_height": 1.5,
+      "tab_size": 2,
+      "word_wrap": true,
+      "line_numbers": true,
+      "minimap": false,
+      "auto_save_interval": 30000
+    }
+  },
+  "security": {
+    "authentication": {
+      "enabled": false,
+      "type": "basic",
+      "users": [
+        {
+          "username": "admin",
+          "password_hash": "$2b$10$...",
+          "permissions": ["read", "write", "delete", "admin"]
+        },
+        {
+          "username": "user",
+          "password_hash": "$2b$10$...",
+          "permissions": ["read", "write"]
+        }
+      ]
+    },
+    "rate_limiting": {
+      "enabled": true,
+      "requests_per_minute": 60,
+      "burst_size": 10
+    },
+    "file_restrictions": {
+      "max_file_size": 104857600,
+      "allowed_extensions": [".txt", ".md", ".js", ".py", ".json", ".css", ".html"],
+      "blocked_extensions": [".exe", ".bat", ".sh", ".ps1"],
+      "hidden_patterns": [".*", "node_modules", "*.tmp", "*.log"]
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "output": {
+      "console": {
+        "enabled": true,
+        "level": "info"
+      },
+      "file": {
+        "enabled": false,
+        "path": "/var/log/dufsx.log",
+        "level": "debug",
+        "max_size": "10MB",
+        "max_files": 5
+      }
+    },
+    "fields": {
+      "timestamp": true,
+      "level": true,
+      "message": true,
+      "request_id": true,
+      "user_agent": false,
+      "ip_address": true
+    }
+  },
+  "cache": {
+    "enabled": true,
+    "ttl": 3600,
+    "max_entries": 1000,
+    "storage": {
+      "type": "memory",
+      "redis": {
+        "host": "localhost",
+        "port": 6379,
+        "database": 0,
+        "password": null
+      }
+    }
+  },
+  "integrations": {
+    "git": {
+      "enabled": false,
+      "auto_commit": false,
+      "commit_message_template": "Updated {filename} via DufsX"
+    },
+    "webhooks": {
+      "enabled": false,
+      "endpoints": [
+        {
+          "url": "https://api.example.com/webhook",
+          "events": ["file.created", "file.updated", "file.deleted"],
+          "secret": "webhook_secret_key",
+          "timeout": 5000
+        }
+      ]
+    },
+    "analytics": {
+      "enabled": false,
+      "google_analytics": {
+        "tracking_id": "GA-XXXXXXXXX"
+      },
+      "custom": {
+        "endpoint": "https://analytics.example.com/track",
+        "api_key": null
+      }
+    }
+  },
+  "file_types": {
+    "text": {
+      "extensions": [".txt", ".md", ".rst"],
+      "mime_types": ["text/plain", "text/markdown"],
+      "editor": "text",
+      "syntax_highlighting": true
+    },
+    "code": {
+      "javascript": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "mime_types": ["application/javascript", "text/javascript"],
+        "language": "javascript",
+        "formatter": "prettier"
+      },
+      "python": {
+        "extensions": [".py", ".pyw"],
+        "mime_types": ["text/x-python"],
+        "language": "python",
+        "formatter": "black"
+      },
+      "css": {
+        "extensions": [".css", ".scss", ".sass", ".less"],
+        "mime_types": ["text/css"],
+        "language": "css",
+        "formatter": "prettier"
+      }
+    },
+    "images": {
+      "extensions": [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp"],
+      "mime_types": ["image/*"],
+      "viewer": "image",
+      "thumbnail_generation": true
+    },
+    "documents": {
+      "extensions": [".pdf", ".doc", ".docx"],
+      "mime_types": ["application/pdf", "application/msword"],
+      "viewer": "document",
+      "preview_generation": false
+    }
+  },
+  "experimental": {
+    "features": {
+      "real_time_collaboration": false,
+      "ai_code_completion": false,
+      "automatic_backups": false,
+      "version_control_integration": false
+    },
+    "settings": {
+      "debug_mode": false,
+      "performance_monitoring": false,
+      "feature_flags": {
+        "new_ui": false,
+        "enhanced_search": true,
+        "bulk_operations": false
+      }
+    }
+  },
+  "metadata": {
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T15:45:30Z",
+    "config_version": "2.1.0",
+    "compatible_versions": ["2.0.0", "2.1.0"],
+    "deprecation_warnings": [],
+    "migration_notes": [
+      "Version 2.1.0 introduces new syntax highlighting features",
+      "Legacy theme configuration has been moved to ui.themes",
+      "Authentication configuration has been restructured"
+    ]
+  },
+  "environment_variables": {
+    "required": [
+      "DUFSX_DATA_DIR",
+      "DUFSX_CONFIG_PATH"
+    ],
+    "optional": [
+      "DUFSX_LOG_LEVEL",
+      "DUFSX_PORT",
+      "DUFSX_HOST",
+      "DUFSX_SSL_CERT",
+      "DUFSX_SSL_KEY"
+    ]
+  },
+  "performance": {
+    "memory_limit": "256MB",
+    "connection_timeout": 30000,
+    "request_timeout": 60000,
+    "max_concurrent_uploads": 5,
+    "chunk_size": 8192,
+    "compression": {
+      "enabled": true,
+      "level": 6,
+      "types": ["text/*", "application/json", "application/javascript"]
+    }
+  }
+}

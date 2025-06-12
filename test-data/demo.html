@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUFS Media Explorer Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-2px);
+        }
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .feature-description {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        .file-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .file-type {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .instructions {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .instructions h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .step {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .step::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #3498db;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .instructions ol {
+            counter-reset: step-counter;
+        }
+        .demo-section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .demo-item {
+            text-align: center;
+            padding: 15px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            transition: border-color 0.2s ease;
+        }
+        .demo-item:hover {
+            border-color: #3498db;
+        }
+        .demo-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .keyboard-shortcuts {
+            background: #2c3e50;
+            color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .shortcut {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #34495e;
+        }
+        .shortcut:last-child {
+            border-bottom: none;
+        }
+        .key {
+            background: #34495e;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>DUFS Enhanced Media Explorer</h1>
+        <p>A powerful, IDE-like file explorer with comprehensive media viewing capabilities</p>
+    </div>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🖼️</div>
+            <div class="feature-title">Image Viewer</div>
+            <div class="feature-description">
+                Advanced image viewing with zoom, pan, and fit-to-screen controls. Supports transparency with checkered background.
+            </div>
+            <div class="file-types">
+                <span class="file-type">.jpg</span>
+                <span class="file-type">.png</span>
+                <span class="file-type">.gif</span>
+                <span class="file-type">.svg</span>
+                <span class="file-type">.webp</span>
+                <span class="file-type">.bmp</span>
+                <span class="file-type">.ico</span>
+                <span class="file-type">.tiff</span>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📄</div>
+            <div class="feature-title">PDF Viewer</div>
+            <div class="feature-description">
+                Built-in PDF viewing with download capability. Uses browser's native PDF renderer for optimal compatibility.
+            </div>
+            <div class="file-types">
+                <span class="file-type">.pdf</span>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎥</div>
+            <div class="feature-title">Video Player</div>
+            <div class="feature-description">
+                HTML5 video player with full controls, seeking, and volume adjustment. Supports all major video formats.
+            </div>
+            <div class="file-types">
+                <span class="file-type">.mp4</span>
+                <span class="file-type">.webm</span>
+                <span class="file-type">.avi</span>
+                <span class="file-type">.mov</span>
+                <span class="file-type">.mkv</span>
+                <span class="file-type">.flv</span>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎵</div>
+            <div class="feature-title">Audio Player</div>
+            <div class="feature-description">
+                Clean audio interface with metadata display, duration tracking, and full playback controls.
+            </div>
+            <div class="file-types">
+                <span class="file-type">.mp3</span>
+                <span class="file-type">.wav</span>
+                <span class="file-type">.ogg</span>
+                <span class="file-type">.m4a</span>
+                <span class="file-type">.flac</span>
+                <span class="file-type">.aac</span>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📝</div>
+            <div class="feature-title">Enhanced Text Editor</div>
+            <div class="feature-description">
+                Syntax-highlighted text editing with auto-save, keyboard shortcuts, and comprehensive markdown support.
+            </div>
+            <div class="file-types">
+                <span class="file-type">.md</span>
+                <span class="file-type">.txt</span>
+                <span class="file-type">.json</span>
+                <span class="file-type">.js</span>
+                <span class="file-type">.css</span>
+                <span class="file-type">.html</span>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🌲</div>
+            <div class="feature-title">Tree Navigation</div>
+            <div class="feature-description">
+                IDE-like file tree with expandable folders, instant file selection, and real-time updates.
+            </div>
+            <div class="file-types">
+                <span class="file-type">All Types</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="instructions">
+        <h2>🚀 How to Use the Enhanced File Explorer</h2>
+        <ol>
+            <li class="step">Start DUFS with: <code>dufs your-directory --allow-all</code></li>
+            <li class="step">Open your browser and navigate to the DUFS URL (usually http://localhost:5000)</li>
+            <li class="step">Use the file tree on the left to browse your directories</li>
+            <li class="step">Click any file to instantly view or edit its content in the right panel</li>
+            <li class="step">For images: Use zoom controls, pan by dragging, or fit to screen</li>
+            <li class="step">For PDFs: View directly in browser with download option</li>
+            <li class="step">For videos/audio: Use built-in HTML5 player controls</li>
+            <li class="step">For text files: Edit with syntax highlighting and auto-save</li>
+            <li class="step">Create new files and folders using the + icons in the tree header</li>
+            <li class="step">Save changes with Ctrl+S (Cmd+S on Mac) or automatic saving</li>
+        </ol>
+    </div>
+
+    <div class="demo-section">
+        <h2>📂 Demo File Types</h2>
+        <p>Try uploading or creating files with these extensions to see the media viewers in action:</p>
+        <div class="demo-grid">
+            <div class="demo-item">
+                <div class="demo-icon">🖼️</div>
+                <strong>Images</strong><br>
+                <small>photo.jpg, logo.png, icon.svg</small>
+            </div>
+            <div class="demo-item">
+                <div class="demo-icon">📄</div>
+                <strong>Documents</strong><br>
+                <small>report.pdf, manual.pdf</small>
+            </div>
+            <div class="demo-item">
+                <div class="demo-icon">🎥</div>
+                <strong>Videos</strong><br>
+                <small>demo.mp4, tutorial.webm</small>
+            </div>
+            <div class="demo-item">
+                <div class="demo-icon">🎵</div>
+                <strong>Audio</strong><br>
+                <small>song.mp3, podcast.wav</small>
+            </div>
+            <div class="demo-item">
+                <div class="demo-icon">📝</div>
+                <strong>Text Files</strong><br>
+                <small>readme.md, config.json</small>
+            </div>
+            <div class="demo-item">
+                <div class="demo-icon">💻</div>
+                <strong>Code Files</strong><br>
+                <small>script.js, style.css</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="keyboard-shortcuts">
+        <h2>⌨️ Keyboard Shortcuts</h2>
+        <div class="shortcuts-grid">
+            <div>
+                <div class="shortcut">
+                    <span>Save File</span>
+                    <span class="key">Ctrl+S / Cmd+S</span>
+                </div>
+                <div class="shortcut">
+                    <span>Bold Text (Markdown)</span>
+                    <span class="key">Ctrl+B / Cmd+B</span>
+                </div>
+                <div class="shortcut">
+                    <span>Italic Text (Markdown)</span>
+                    <span class="key">Ctrl+I / Cmd+I</span>
+                </div>
+            </div>
+            <div>
+                <div class="shortcut">
+                    <span>Toggle Preview (Markdown)</span>
+                    <span class="key">Ctrl+P / Cmd+P</span>
+                </div>
+                <div class="shortcut">
+                    <span>Side-by-Side View</span>
+                    <span class="key">F9</span>
+                </div>
+                <div class="shortcut">
+                    <span>Fullscreen Mode</span>
+                    <span class="key">F11</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>✨ Key Features</h2>
+        <ul style="line-height: 2;">
+            <li><strong>🎯 One-Click File Access:</strong> Click any file in the tree to instantly view or edit</li>
+            <li><strong>📱 Responsive Design:</strong> Works perfectly on desktop, tablet, and mobile devices</li>
+            <li><strong>🌙 Dark Mode Support:</strong> Automatic theme switching based on system preference</li>
+            <li><strong>💾 Auto-Save:</strong> Never lose your work with automatic saving every 30 seconds</li>
+            <li><strong>🔍 Smart File Detection:</strong> Automatically chooses the best viewer for each file type</li>
+            <li><strong>⚡ Fast Performance:</strong> Lazy loading and efficient rendering for large directories</li>
+            <li><strong>🔒 Secure:</strong> Respects all server-side permissions and access controls</li>
+            <li><strong>🎨 Modern UI:</strong> Clean, professional interface inspired by popular IDEs</li>
+        </ul>
+    </div>
+
+    <footer style="text-align: center; margin-top: 50px; padding: 20px; color: #7f8c8d;">
+        <p><strong>DUFS Enhanced Media Explorer</strong> - Transform your file server into a powerful IDE-like experience!</p>
+        <p><small>Click any file in the tree explorer to see these viewers in action.</small></p>
+    </footer>
+</body>
+</html>
