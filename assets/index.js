@@ -149,7 +149,7 @@ let $fileTree;
 let $welcomeScreen;
 let $fileContent;
 let $currentFileName;
-let $currentFilePath;
+// let $currentFilePath;
 let $contentHeaderCustom;
 let currentFilePath = null;
 let fileTreeData = {};
@@ -199,7 +199,7 @@ async function ready() {
   $welcomeScreen = document.querySelector("#welcome-screen");
   $fileContent = document.querySelector("#file-content");
   $currentFileName = document.querySelector(".current-file-name");
-  $currentFilePath = document.querySelector(".current-file-path");
+  // $currentFilePath = document.querySelector(".current-file-path");
   $contentHeaderCustom = document.querySelector(".content-header-custom");
 
   // Media viewer elements
@@ -791,7 +791,7 @@ function showWelcomeScreen() {
   $welcomeScreen.classList.remove('hidden');
   $fileContent.classList.add('hidden');
   $currentFileName.textContent = 'No file selected';
-  $currentFilePath.textContent = '';
+  // $currentFilePath.textContent = 'No file selected';
   currentFilePath = null;
 
   // Hide file actions
@@ -804,8 +804,8 @@ function showWelcomeScreen() {
 async function loadFileContent(path, fileInfo) {
   try {
     currentFilePath = path;
-    $currentFileName.textContent = fileInfo.name;
-    $currentFilePath.textContent = path;
+    $currentFileName.textContent = path;  //fileInfo.name;
+    // $currentFilePath.textContent = path;
     $contentHeaderCustom.innerHTML = "";
 
     // Show file actions
@@ -844,7 +844,7 @@ async function loadFileContent(path, fileInfo) {
     if (contentType.indexOf("application/octet-stream") > -1 ) {
       isEditable = false;
     }
-    console.log("Content type is ", contentType, isEditable);
+    // console.log("Content type is ", contentType, isEditable);
     //restrict by content length
     isEditable = contentLength <= EDITABLE_TEXT_MAX_SIZE;
     // For non-editable files, check if we can still display them
@@ -1111,7 +1111,9 @@ function createEditorToolbar() {
   // <button id="format-btn" title="Format Document (Ctrl+Shift+F)">Format</button>
   // <button id="fold-all-btn" title="Fold All">Fold All</button>
   // <button id="unfold-all-btn" title="Unfold All">Unfold All</button>
+  // <div class="separator"></div>
   toolbar.innerHTML = `
+    <button id="format-btn" title="Format Document (Ctrl+Shift+F)">Format</button>
     <div class="separator"></div>
     <select id="language-select" title="Language Mode">
       <option value="javascript">JavaScript</option>
@@ -1809,13 +1811,13 @@ async function selectDirectory(treeItem, path, item) {
 
   // Update current path display
   if ($currentFileName) {
-    $currentFileName.textContent = `Directory: ${item.name}`;
+    $currentFileName.textContent = path; //`Directory: ${item.name}`;
   }
-  if ($currentFilePath) {
-    $currentFilePath.textContent = path;
-  }
+  // if ($currentFilePath) {
+  //   $currentFilePath.textContent = path;
+  // }
   $contentHeaderCustom.innerHTML = "";
-
+  $welcomeScreen.classList.add('hidden');
   // Load and display directory contents in the right panel
   await showDirectoryContents(path);
   // const response = await fetch(`${DATA.relative_uri_prefix}${encodeURIComponent(path)}/?json`);
