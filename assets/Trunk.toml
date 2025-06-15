@@ -1,0 +1,132 @@
+[build]
+# Target directory for built assets
+target = "dist"
+# Public URL path for assets
+public_url = "/"
+# Enable file watching in development
+watch = ["assets", "src"]
+
+[serve]
+# Port for development server
+port = 8080
+# Enable auto-reload
+open = false
+# Serve files from dist directory
+dist = "dist"
+
+[clean]
+# Directories to clean
+dist = "dist"
+cargo = false
+
+# CSS Processing with Tailwind
+[[hooks]]
+stage = "pre_build"
+command = "npx"
+command_arguments = ["tailwindcss", "-i", "./assets/input.css", "-o", "./assets/index.css", "--minify"]
+
+[[hooks]]
+stage = "post_build"
+command = "npx"
+command_arguments = ["tailwindcss", "-i", "./assets/input.css", "-o", "./dist/index.css", "--purge", "./dist/**/*.html", "./dist/**/*.js", "--minify"]
+
+# Asset copying
+[[copy]]
+from = "assets/favicon.ico"
+to = "favicon.ico"
+
+[[copy]]
+from = "assets/codemirror.js"
+to = "codemirror.js"
+
+[[copy]]
+from = "assets/chunmde.bundle.min.js"
+to = "chunmde.bundle.min.js"
+
+# HTML processing
+[[proxy]]
+backend = "http://127.0.0.1:5000"
+ws = true
+
+[tools]
+# Sass/SCSS support
+sass = "sass"
+# PostCSS for additional processing
+postcss = "postcss"
+# Wasm optimization
+wasm-opt = ["-O4", "--enable-simd"]
+
+# Environment-specific configurations
+[env.development]
+[env.development.build]
+minify = false
+release = false
+
+[env.production]
+[env.production.build]
+minify = true
+release = true
+filehash = true
+
+# Asset optimization
+[optimize]
+# Minify HTML
+minify_html = true
+# Compress assets
+compress = "gzip"
+# Optimize images
+optimize_images = true
+# Tree shake unused code
+tree_shake = true
+
+# Tailwind CSS specific configuration
+[css]
+# Enable CSS modules
+modules = false
+# Autoprefixer
+autoprefixer = true
+# CSS minification
+minify = true
+# Purge unused styles
+purge = {
+    enabled = true,
+    content = ["./dist/**/*.html", "./dist/**/*.js"],
+    safelist = [
+        "hidden",
+        "collapsed",
+        "expanded",
+        "selected",
+        "dragging",
+        "resizing"
+    ]
+}
+
+# File watching patterns
+[watch]
+ignore = [
+    "target",
+    "dist",
+    "node_modules",
+    ".git",
+    "*.tmp",
+    "*.log"
+]
+include = [
+    "assets/**/*",
+    "src/**/*",
+    "*.html",
+    "*.css",
+    "*.js"
+]
+
+# Build profiles
+[profile.dev]
+debug = true
+optimize = false
+source_maps = true
+
+[profile.release]
+debug = false
+optimize = true
+source_maps = false
+minify = true

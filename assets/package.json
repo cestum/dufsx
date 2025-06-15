@@ -1,0 +1,101 @@
+{
+  "name": "dufsx-web-assets",
+  "version": "1.0.0",
+  "description": "Web assets and build tools for DUFSX file server",
+  "private": true,
+  "scripts": {
+    "dev": "trunk serve --config Trunk.toml --port 8080",
+    "build": "trunk build --config Trunk.toml --release",
+    "build:css": "tailwindcss -i ./input.css -o ./index.css --watch",
+    "build:css:prod": "tailwindcss -i ./input.css -o ./index.css --minify",
+    "clean": "trunk clean && rm -rf dist node_modules/.cache",
+    "preview": "trunk serve --config Trunk.toml --release --port 8080",
+    "lint:css": "stylelint \"**/*.css\"",
+    "format": "prettier --write \"**/*.{html,js,css,json}\"",
+    "analyze": "tailwindcss -i ./input.css -o ./index.css --minify --verbose",
+    "purge": "purgecss --css ./index.css --content ./index.html ./assets/**/*.js --output ./dist/"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^6.1.2",
+    "postcss": "^8.5.5",
+    "postcss-cli": "^11.0.0",
+    "prettier": "^3.1.0",
+    "purgecss": "^5.0.0",
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^34.0.0",
+    "tailwindcss": "^4.1.10",
+    "trunk": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "postcss": {
+    "plugins": {
+      "tailwindcss": {},
+      "autoprefixer": {},
+      "cssnano": {
+        "preset": "default"
+      }
+    }
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "printWidth": 80,
+    "htmlWhitespaceSensitivity": "css"
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-standard"
+    ],
+    "rules": {
+      "at-rule-no-unknown": [
+        true,
+        {
+          "ignoreAtRules": [
+            "tailwind",
+            "layer",
+            "apply",
+            "screen"
+          ]
+        }
+      ],
+      "function-no-unknown": [
+        true,
+        {
+          "ignoreFunctions": [
+            "theme",
+            "screen"
+          ]
+        }
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sigoden/dufs.git",
+    "directory": "assets"
+  },
+  "keywords": [
+    "tailwindcss",
+    "trunk",
+    "file-server",
+    "web-assets",
+    "css",
+    "responsive"
+  ],
+  "author": "DUFSX Contributors",
+  "license": "MIT OR Apache-2.0"
+}

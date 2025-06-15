@@ -2658,4 +2658,9 @@ body {
     color: #7d8590;
   }
 
-  .upload-progress .uplo
+  .cm-cursor {
+    border-left: 2px solid white; /* Example: Red cursor */
+  }
+  .cm-selectionBackground {
+    background-color: rgba(255, 255, 255, 0.2); /* Example: Semi-transparent blue */
+  }

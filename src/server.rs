@@ -54,11 +54,12 @@ use xml::escape::escape_str_pcdata;
 pub type Request = hyper::Request<Incoming>;
 pub type Response = hyper::Response<BoxBody<Bytes, anyhow::Error>>;
 
-const INDEX_HTML: &str = include_str!("../assets/index.html");
-const INDEX_CSS: &str = include_str!("../assets/index.css");
-const INDEX_JS: &str = include_str!("../assets/index.js");
-const CODEMIRROR_JS: &str = include_str!("../assets/codemirror.js");
-const FAVICON_ICO: &[u8] = include_bytes!("../assets/favicon.ico");
+const INDEX_HTML: &str = include_str!("../assets/dist/index.html");
+const INDEX_CSS: &str = include_str!("../assets/dist/index.css");
+const INDEX_JS: &str = include_str!("../assets/dist/index.js");
+const CODEMIRROR_JS: &str = include_str!("../assets/dist/codemirror.js");
+const CHUNMDE_JS: &str = include_str!("../assets/dist/chunmde.bundle.min.js");
+const FAVICON_ICO: &[u8] = include_bytes!("../assets/dist/favicon.ico");
 const INDEX_NAME: &str = "index.html";
 const BUF_SIZE: usize = 65536;
 const EDITABLE_TEXT_MAX_SIZE: u64 = 4194304; // 4M
@@ -740,6 +741,13 @@ impl Server {
                     }
                     "codemirror.js" => {
                         *res.body_mut() = body_full(CODEMIRROR_JS);
+                        res.headers_mut().insert(
+                            "content-type",
+                            HeaderValue::from_static("application/javascript; charset=UTF-8"),
+                        );
+                    }
+                    "chunmde.bundle.min.js" => {
+                        *res.body_mut() = body_full(CHUNMDE_JS);
                         res.headers_mut().insert(
                             "content-type",
                             HeaderValue::from_static("application/javascript; charset=UTF-8"),
